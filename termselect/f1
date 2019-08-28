@@ -1,0 +1,239 @@
+haiou@gpu3-1080:/home/hd_1T/haiou/testdata/termselect$ python3.5 -u src/main.py term --lr 0.006 --dropout_rnn_output 0.4 --batcdden_size 100 --use_multiturn_infer False --dropout_att_score 0.2 --use_conv False --cat_num 3 --l2_strength 3e-6 --tri_input NTrue --q_channel True --c_channel True --use_cuda False
+Namespace(batch_size=32, beta=10.0, c_channel=True, c_rnn_input_type='pqc', cat_num=3, checkpoint_name='best', debug=False, docpout_att_score=0.2, dropout_emb=0.4, dropout_init_mem_emb=0.5, dropout_residual=0.1, dropout_rnn_output=0.4, embedding_file='/hu/test0730_race_update/data/glove.840B.300d.txt', epoch=30, finetune_topk=10, gpu='0', grad_clipping=10.0, hidden_size=100, inf_held_out=10, l2_strength=3e-06, lr=0.006, matched_p='pcq', matching_order='csm', max_length=50, model_name='term', ner_emb_dim'adamax', p_channel=True, pos_emb_dim=12, pretrained='', q_channel=True, rel_emb_dim=10, rnn_output_dropout=True, rnn_padding=T'lstm', seed=1234, test_mode=False, train_name='model_00', tri_input='NA', use_bilstm=True, use_bimemory=False, use_conv=False,e, use_multiturn_infer=False)
+Load vocabulary from ./data/vocab...
+Vocabulary size: 5451
+Load pos vocabulary from ./data/pos_vocab...
+POS vocabulary size: 47
+Load ner vocabulary from ./data/ner_vocab...
+NER vocabulary size: 18
+Load relation vocabulary from ./data/rel_vocab...
+Rel vocabulary size: 32
+Load 1924 examples from ./data/train.json... use 0 seconds
+Load 482 examples from ./data/dev.json... use 0 seconds
+Load 482 examples from ./data/dev.json... use 0 seconds
+Use cuda: False
+###########self.args.matching_order:  csm 
+MyModel(
+  (embedding): Embedding(5451, 300, padding_idx=0)
+  (pos_embedding): Embedding(47, 12, padding_idx=0)
+  (ner_embedding): Embedding(18, 8, padding_idx=0)
+  (rel_embedding): Embedding(32, 10, padding_idx=0)
+  (context_rnn): StackedBRNN(
+    (rnns): ModuleList(
+      (0): LSTM(345, 100, bidirectional=True)
+    )
+  )
+  (Hq_BiLstm): StackedBRNN(
+    (rnns): ModuleList(
+      (0): LSTM(445, 100, bidirectional=True)
+    )
+  )
+  (hidden_match): SeqDotAttnMatch()
+  (mtinfer): MultiTurnInference(
+    (cat_linear): Linear(in_features=400, out_features=100, bias=True)
+    (sub_linear): Linear(in_features=200, out_features=100, bias=True)
+    (mul_linear): Linear(in_features=200, out_features=100, bias=True)
+    (inference_rnn): StackedBRNN(
+      (rnns): ModuleList(
+        (0): LSTM(300, 100, bidirectional=True)
+      )
+    )
+  )
+  (q_self_attn): LinearSeqAttn(
+    (linear): Linear(in_features=200, out_features=1, bias=True)
+  )
+  (linearlayer): Linear(in_features=345, out_features=100, bias=True)
+  (pre_y): Linear(in_features=245, out_features=1, bias=True)
+  (c_infer_linear): Linear(in_features=1600, out_features=100, bias=True)
+)
+Number of parameters:  1396275
+model <model.Model object at 0x7f12bdc2e400>
+Trained model will be saved to ./checkpoint/term-best.mdl
+Epoch 0...
+/home/hd_1T/haiou/testdata/termselect/src/layers.py:227: UserWarning: Implicit dimension choice for softmax has been deprecatedall to include dim=X as an argument.
+  alpha_flat = F.softmax(scores.view(-1, y.size(1)))
+/usr/local/lib/python3.5/dist-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torchad.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+/home/hd_1T/haiou/testdata/termselect/src/model.py:95: UserWarning: torch.nn.utils.clip_grad_norm is now deprecated in favor ofs.clip_grad_norm_.
+  torch.nn.utils.clip_grad_norm(self.network.parameters(), self.args.grad_clipping)
+LR: 0.006
+Train accuracy: 0.964286
+Dev accuracy: 0.837838
+Test accuracy: 0.837838
+Epoch 0 use 13 seconds.
+Epoch 1...
+LR: 0.006
+Train accuracy: 0.964286
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 1 use 13 seconds.
+Epoch 2...
+LR: 0.006
+Train accuracy: 0.964286
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 2 use 12 seconds.
+Epoch 3...
+LR: 0.006
+Train accuracy: 0.964286
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 3 use 12 seconds.
+Epoch 4...
+LR: 0.006
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 4 use 12 seconds.
+Epoch 5...
+LR: 0.006
+Train accuracy: 0.964286
+Dev accuracy: 0.891892
+Test accuracy: 0.891892
+Epoch 5 use 12 seconds.
+Epoch 6...
+LR: 0.006
+Train accuracy: 0.982143
+Dev accuracy: 0.891892
+Test accuracy: 0.891892
+Epoch 6 use 12 seconds.
+Epoch 7...
+LR: 0.006
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 7 use 12 seconds.
+Epoch 8...
+LR: 0.006
+Train accuracy: 0.982143
+Dev accuracy: 0.891892
+Test accuracy: 0.891892
+Epoch 8 use 12 seconds.
+Epoch 9...
+LR: 0.006
+Train accuracy: 0.982143
+Dev accuracy: 0.891892
+Test accuracy: 0.891892
+Epoch 9 use 12 seconds.
+Epoch 10...
+LR: 0.003
+Train accuracy: 0.982143
+Dev accuracy: 0.891892
+Test accuracy: 0.891892
+Epoch 10 use 12 seconds.
+Epoch 11...
+LR: 0.003
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 11 use 12 seconds.
+Epoch 12...
+LR: 0.003
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 12 use 12 seconds.
+Epoch 13...
+LR: 0.003
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 13 use 11 seconds.
+Epoch 14...
+LR: 0.003
+Train accuracy: 0.982143
+Dev accuracy: 0.891892
+Test accuracy: 0.891892
+Epoch 14 use 9 seconds.
+Epoch 15...
+LR: 0.0015
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 15 use 9 seconds.
+Epoch 16...
+LR: 0.0015
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 16 use 9 seconds.
+Epoch 17...
+LR: 0.0015
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 17 use 9 seconds.
+Epoch 18...
+LR: 0.0015
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 18 use 9 seconds.
+Epoch 19...
+LR: 0.0015
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 19 use 9 seconds.
+Epoch 20...
+LR: 0.00075
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 20 use 9 seconds.
+Epoch 21...
+LR: 0.00075
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 21 use 10 seconds.
+Epoch 22...
+LR: 0.00075
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 22 use 11 seconds.
+Epoch 23...
+LR: 0.00075
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 23 use 11 seconds.
+Epoch 24...
+LR: 0.00075
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 24 use 11 seconds.
+Epoch 25...
+LR: 0.00075
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 25 use 12 seconds.
+Epoch 26...
+LR: 0.00075
+Train accuracy: 0.982143
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 26 use 12 seconds.
+Epoch 27...
+LR: 0.00075
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 27 use 12 seconds.
+Epoch 28...
+LR: 0.00075
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 28 use 12 seconds.
+Epoch 29...
+LR: 0.00075
+Train accuracy: 1.000000
+Dev accuracy: 0.864865
+Test accuracy: 0.864865
+Epoch 29 use 12 seconds.
+??????????????????????????????????????
+Epoch: 5 best_dev_acc: 0.891892  best_test_acc: 0.891892

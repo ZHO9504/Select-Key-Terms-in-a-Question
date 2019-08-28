@@ -1,0 +1,772 @@
+Namespace(batch_size=250, beta=10.0, c_channel=True, c_rnn_input_type='pqc', cat_num=3, checkpoint_name='best', debug=False, doc_layers=1, dropout_att_score=0.2, dropout_emb=0.4, dropout_init_mem_emb=0.5, dropout_residual=0.1, dropout_rnn_output=0.4, embedding_file='/home/hd_1T/haiou/test0730_race_update/data/glove.840B.300d.txt', epoch=30, finetune_topk=10, gpu='0', grad_clipping=10.0, hidden_size=100, infer_layers=1, k_held_out=10, l2_strength=3e-06, lr=0.006, matched_p='pcq', matching_order='csm', max_length=50, model_name='term', ner_emb_dim=8, optimizer='adamax', p_channel=False, pos_emb_dim=12, pretrained='', q_channel=True, rel_emb_dim=10, rnn_output_dropout=True, rnn_padding=True, rnn_type='lstm', seed=1234, test_mode=False, train_name='model_00', tri_input='NTrue', use_bilstm=True, use_bimemory=False, use_conv=False, use_cuda=False, use_multiturn_infer=False)
+Load vocabulary from ./data/vocab...
+Vocabulary size: 5451
+Load pos vocabulary from ./data/pos_vocab...
+POS vocabulary size: 47
+Load ner vocabulary from ./data/ner_vocab...
+NER vocabulary size: 18
+Load relation vocabulary from ./data/rel_vocab...
+Rel vocabulary size: 32
+Load 1924 examples from ./data/train.json... use 0 seconds
+Load 241 examples from ./data/dev.json... use 0 seconds
+Load 241 examples from ./data/test.json... use 0 seconds
+Use cuda: False
+###########self.args.matching_order:  csm 
+MyModel(
+  (embedding): Embedding(5451, 300, padding_idx=0)
+  (pos_embedding): Embedding(47, 12, padding_idx=0)
+  (ner_embedding): Embedding(18, 8, padding_idx=0)
+  (rel_embedding): Embedding(32, 10, padding_idx=0)
+  (context_rnn): StackedBRNN(
+    (rnns): ModuleList(
+      (0): LSTM(345, 100, bidirectional=True)
+    )
+  )
+  (Hq_BiLstm): StackedBRNN(
+    (rnns): ModuleList(
+      (0): LSTM(445, 100, bidirectional=True)
+    )
+  )
+  (hidden_match): SeqDotAttnMatch()
+  (mtinfer): MultiTurnInference(
+    (cat_linear): Linear(in_features=400, out_features=100, bias=True)
+    (sub_linear): Linear(in_features=200, out_features=100, bias=True)
+    (mul_linear): Linear(in_features=200, out_features=100, bias=True)
+    (inference_rnn): StackedBRNN(
+      (rnns): ModuleList(
+        (0): LSTM(300, 100, bidirectional=True)
+      )
+    )
+  )
+  (q_self_attn): LinearSeqAttn(
+    (linear): Linear(in_features=200, out_features=1, bias=True)
+  )
+  (linearlayer): Linear(in_features=345, out_features=100, bias=True)
+  (pre_y): Linear(in_features=245, out_features=1, bias=True)
+  (c_infer_linear): Linear(in_features=1200, out_features=100, bias=True)
+)
+Number of parameters:  1356275
+model <model.Model object at 0x7fe4c67cef60>
+Trained model will be saved to ./checkpoint/term-best.mdl
+Epoch 0...
+LR: 0.006
+1924
+32551 27274 0.8378851648182851
+0.14033264033264034
+Train accuracy: 0.837885
+Train precision: 0.907394
+Train recall: 0.703067
+Train f1_core: 0.792269
+241
+4254 3555 0.8356840620592384
+0.11618257261410789
+Dev accuracy: 0.835684
+Dev precision: 0.925509
+Dev recall: 0.689529
+Dev f1_core: 0.790279
+241
+4383 3613 0.8243212411590235
+0.1078838174273859
+Test accuracy: 0.824321
+Test precision: 0.915855
+Test recall: 0.669888
+Test f1_core: 0.773796
+Epoch 0 use 12 seconds.
+Epoch 1...
+LR: 0.006
+1924
+32551 28828 0.8856256336210869
+0.2687110187110187
+Train accuracy: 0.885626
+Train precision: 0.891584
+Train recall: 0.842311
+Train f1_core: 0.866248
+241
+4254 3786 0.8899858956276445
+0.21161825726141079
+Dev accuracy: 0.889986
+Dev precision: 0.914845
+Dev recall: 0.832461
+Dev f1_core: 0.871711
+241
+4383 3863 0.8813597992242757
+0.1908713692946058
+Test accuracy: 0.881360
+Test precision: 0.908475
+Test recall: 0.817904
+Test f1_core: 0.860814
+Epoch 1 use 11 seconds.
+Epoch 2...
+LR: 0.006
+1924
+32551 29579 0.9086971214402015
+0.35602910602910603
+Train accuracy: 0.908697
+Train precision: 0.891582
+Train recall: 0.902047
+Train f1_core: 0.896784
+241
+4254 3877 0.9113775270333804
+0.3070539419087137
+Dev accuracy: 0.911378
+Dev precision: 0.913654
+Dev recall: 0.886387
+Dev f1_core: 0.899814
+241
+4383 3982 0.9085101528633356
+0.27800829875518673
+Test accuracy: 0.908510
+Test precision: 0.915560
+Test recall: 0.876907
+Test f1_core: 0.895817
+Epoch 2 use 11 seconds.
+Epoch 3...
+LR: 0.006
+1924
+32551 29922 0.919234432121901
+0.4085239085239085
+Train accuracy: 0.919234
+Train precision: 0.888224
+Train recall: 0.933836
+Train f1_core: 0.910459
+241
+4254 3926 0.922896097790315
+0.38589211618257263
+Dev accuracy: 0.922896
+Dev precision: 0.907732
+Dev recall: 0.921990
+Dev f1_core: 0.914805
+241
+4383 4039 0.9215149441022131
+0.3236514522821577
+Test accuracy: 0.921515
+Test precision: 0.913354
+Test recall: 0.911495
+Test f1_core: 0.912424
+Epoch 3 use 11 seconds.
+Epoch 4...
+LR: 0.006
+1924
+32551 30039 0.9228287917421891
+0.42203742203742206
+Train accuracy: 0.922829
+Train precision: 0.889703
+Train recall: 0.941172
+Train f1_core: 0.914714
+241
+4254 3939 0.9259520451339915
+0.3817427385892116
+Dev accuracy: 0.925952
+Dev precision: 0.910026
+Dev recall: 0.926702
+Dev f1_core: 0.918288
+241
+4383 4053 0.9247091033538672
+0.37344398340248963
+Test accuracy: 0.924709
+Test precision: 0.918200
+Test recall: 0.913530
+Test f1_core: 0.915859
+Epoch 4 use 11 seconds.
+Epoch 5...
+LR: 0.006
+1924
+32551 30143 0.9260237780713342
+0.4391891891891892
+Train accuracy: 0.926024
+Train precision: 0.890712
+Train recall: 0.948089
+Train f1_core: 0.918505
+241
+4254 3946 0.9275975552421251
+0.4024896265560166
+Dev accuracy: 0.927598
+Dev precision: 0.915026
+Dev recall: 0.924607
+Dev f1_core: 0.919792
+241
+4383 4067 0.9279032626055214
+0.4024896265560166
+Test accuracy: 0.927903
+Test precision: 0.921779
+Test recall: 0.917091
+Test f1_core: 0.919429
+Epoch 5 use 11 seconds.
+Epoch 6...
+LR: 0.006
+1924
+32551 30196 0.9276519922583023
+0.4475051975051975
+Train accuracy: 0.927652
+Train precision: 0.896275
+Train recall: 0.944805
+Train f1_core: 0.919901
+241
+4254 3951 0.9287729196050776
+0.4066390041493776
+Dev accuracy: 0.928773
+Dev precision: 0.919144
+Dev recall: 0.922513
+Dev f1_core: 0.920826
+241
+4383 4058 0.9258498745151723
+0.3983402489626556
+Test accuracy: 0.925850
+Test precision: 0.924909
+Test recall: 0.908444
+Test f1_core: 0.916603
+Epoch 6 use 11 seconds.
+Epoch 7...
+LR: 0.006
+1924
+32551 30264 0.9297410217812049
+0.45478170478170477
+Train accuracy: 0.929741
+Train precision: 0.899217
+Train recall: 0.946273
+Train f1_core: 0.922145
+241
+4254 3951 0.9287729196050776
+0.4149377593360996
+Dev accuracy: 0.928773
+Dev precision: 0.919582
+Dev recall: 0.921990
+Dev f1_core: 0.920784
+241
+4383 4072 0.9290440337668264
+0.4107883817427386
+Test accuracy: 0.929044
+Test precision: 0.927649
+Test recall: 0.913021
+Test f1_core: 0.920277
+Epoch 7 use 12 seconds.
+Epoch 8...
+LR: 0.006
+1924
+32551 30301 0.930877699609843
+0.45686070686070684
+Train accuracy: 0.930878
+Train precision: 0.897044
+Train recall: 0.952072
+Train f1_core: 0.923739
+241
+4254 3961 0.9311236483309826
+0.42738589211618255
+Dev accuracy: 0.931124
+Dev precision: 0.916109
+Dev recall: 0.931937
+Dev f1_core: 0.923955
+241
+4383 4081 0.9310974218571755
+0.4149377593360996
+Test accuracy: 0.931097
+Test precision: 0.921053
+Test recall: 0.925738
+Test f1_core: 0.923389
+Epoch 8 use 11 seconds.
+Epoch 9...
+LR: 0.006
+1924
+32551 30369 0.9329667291327456
+0.46465696465696466
+Train accuracy: 0.932967
+Train precision: 0.904070
+Train recall: 0.948159
+Train f1_core: 0.925590
+241
+4254 3957 0.9301833568406206
+0.42323651452282157
+Dev accuracy: 0.930183
+Dev precision: 0.919833
+Dev recall: 0.925131
+Dev f1_core: 0.922475
+241
+4383 4081 0.9310974218571755
+0.4066390041493776
+Test accuracy: 0.931097
+Test precision: 0.926667
+Test recall: 0.919125
+Test f1_core: 0.922880
+Epoch 9 use 11 seconds.
+Epoch 10...
+LR: 0.003
+1924
+32551 30428 0.9347792694540874
+0.47505197505197505
+Train accuracy: 0.934779
+Train precision: 0.904285
+Train recall: 0.952491
+Train f1_core: 0.927762
+241
+4254 3970 0.9332393041842971
+0.43983402489626555
+Dev accuracy: 0.933239
+Dev precision: 0.920372
+Dev recall: 0.931937
+Dev f1_core: 0.926119
+241
+4383 4084 0.9317818845539585
+0.4107883817427386
+Test accuracy: 0.931782
+Test precision: 0.923742
+Test recall: 0.924212
+Test f1_core: 0.923977
+Epoch 10 use 12 seconds.
+Epoch 11...
+LR: 0.003
+1924
+32551 30460 0.9357623421707475
+0.4766112266112266
+Train accuracy: 0.935762
+Train precision: 0.908380
+Train recall: 0.949696
+Train f1_core: 0.928579
+241
+4254 3966 0.9322990126939351
+0.43983402489626555
+Dev accuracy: 0.932299
+Dev precision: 0.922396
+Dev recall: 0.927225
+Dev f1_core: 0.924804
+241
+4383 4081 0.9310974218571755
+0.4190871369294606
+Test accuracy: 0.931097
+Test precision: 0.926667
+Test recall: 0.919125
+Test f1_core: 0.922880
+Epoch 11 use 11 seconds.
+Epoch 12...
+LR: 0.003
+1924
+32551 30475 0.9362231575066818
+0.47765072765072764
+Train accuracy: 0.936223
+Train precision: 0.913049
+Train recall: 0.944945
+Train f1_core: 0.928723
+241
+4254 3962 0.9313587212035731
+0.4315352697095436
+Dev accuracy: 0.931359
+Dev precision: 0.926238
+Dev recall: 0.920419
+Dev f1_core: 0.923319
+241
+4383 4070 0.9285877253023044
+0.38589211618257263
+Test accuracy: 0.928588
+Test precision: 0.931142
+Test recall: 0.907935
+Test f1_core: 0.919392
+Epoch 12 use 11 seconds.
+Epoch 13...
+LR: 0.003
+1924
+32551 30484 0.9364996467082425
+0.47557172557172556
+Train accuracy: 0.936500
+Train precision: 0.907169
+Train recall: 0.953120
+Train f1_core: 0.929577
+241
+4254 3970 0.9332393041842971
+0.43568464730290457
+Dev accuracy: 0.933239
+Dev precision: 0.921680
+Dev recall: 0.930366
+Dev f1_core: 0.926003
+241
+4383 4083 0.9315537303216974
+0.4066390041493776
+Test accuracy: 0.931554
+Test precision: 0.925869
+Test recall: 0.921160
+Test f1_core: 0.923508
+Epoch 13 use 11 seconds.
+Epoch 14...
+LR: 0.003
+1924
+32551 30521 0.9376363245368806
+0.487006237006237
+Train accuracy: 0.937636
+Train precision: 0.913319
+Train recall: 0.948159
+Train f1_core: 0.930413
+241
+4254 3968 0.9327691584391161
+0.43568464730290457
+Dev accuracy: 0.932769
+Dev precision: 0.925577
+Dev recall: 0.924607
+Dev f1_core: 0.925092
+241
+4383 4078 0.9304129591603925
+0.3941908713692946
+Test accuracy: 0.930413
+Test precision: 0.929199
+Test recall: 0.914547
+Test f1_core: 0.921815
+Epoch 14 use 11 seconds.
+Epoch 15...
+LR: 0.0015
+1924
+32551 30544 0.93834290805198
+0.4896049896049896
+Train accuracy: 0.938343
+Train precision: 0.912787
+Train recall: 0.950604
+Train f1_core: 0.931312
+241
+4254 3976 0.9346497414198401
+0.44813278008298757
+Dev accuracy: 0.934650
+Dev precision: 0.927225
+Dev recall: 0.927225
+Dev f1_core: 0.927225
+241
+4383 4083 0.9315537303216974
+0.4066390041493776
+Test accuracy: 0.931554
+Test precision: 0.928498
+Test recall: 0.918108
+Test f1_core: 0.923274
+Epoch 15 use 11 seconds.
+Epoch 16...
+LR: 0.0015
+1924
+32551 30557 0.9387422813431231
+0.49324324324324326
+Train accuracy: 0.938742
+Train precision: 0.917791
+Train recall: 0.945364
+Train f1_core: 0.931374
+241
+4254 3962 0.9313587212035731
+0.4315352697095436
+Dev accuracy: 0.931359
+Dev precision: 0.928496
+Dev recall: 0.917801
+Dev f1_core: 0.923117
+241
+4383 4075 0.9297284964636094
+0.3900414937759336
+Test accuracy: 0.929728
+Test precision: 0.932672
+Test recall: 0.908952
+Test f1_core: 0.920659
+Epoch 16 use 11 seconds.
+Epoch 17...
+LR: 0.0015
+1924
+32551 30565 0.9389880495222881
+0.48804573804573803
+Train accuracy: 0.938988
+Train precision: 0.912412
+Train recall: 0.952700
+Train f1_core: 0.932121
+241
+4254 3974 0.9341795956746591
+0.44813278008298757
+Dev accuracy: 0.934180
+Dev precision: 0.924922
+Dev recall: 0.928796
+Dev f1_core: 0.926855
+241
+4383 4084 0.9317818845539585
+0.4024896265560166
+Test accuracy: 0.931782
+Test precision: 0.927655
+Test recall: 0.919634
+Test f1_core: 0.923627
+Epoch 17 use 12 seconds.
+Epoch 18...
+LR: 0.0015
+1924
+32551 30573 0.9392338177014531
+0.49636174636174635
+Train accuracy: 0.939234
+Train precision: 0.915684
+Train recall: 0.949207
+Train f1_core: 0.932144
+241
+4254 3970 0.9332393041842971
+0.43983402489626555
+Dev accuracy: 0.933239
+Dev precision: 0.927445
+Dev recall: 0.923560
+Dev f1_core: 0.925498
+241
+4383 4080 0.9308692676249144
+0.3941908713692946
+Test accuracy: 0.930869
+Test precision: 0.929716
+Test recall: 0.915056
+Test f1_core: 0.922328
+Epoch 18 use 11 seconds.
+Epoch 19...
+LR: 0.0015
+1924
+32551 30567 0.9390494915670794
+0.4890852390852391
+Train accuracy: 0.939049
+Train precision: 0.911873
+Train recall: 0.953539
+Train f1_core: 0.932240
+241
+4254 3976 0.9346497414198401
+0.44813278008298757
+Dev accuracy: 0.934650
+Dev precision: 0.924116
+Dev recall: 0.930890
+Dev f1_core: 0.927491
+241
+4383 4083 0.9315537303216974
+0.3983402489626556
+Test accuracy: 0.931554
+Test precision: 0.927179
+Test recall: 0.919634
+Test f1_core: 0.923391
+Epoch 19 use 11 seconds.
+Epoch 20...
+LR: 0.00075
+1924
+32551 30587 0.9396639120149919
+0.498960498960499
+Train accuracy: 0.939664
+Train precision: 0.920349
+Train recall: 0.944526
+Train f1_core: 0.932281
+241
+4254 3968 0.9327691584391161
+0.43983402489626555
+Dev accuracy: 0.932769
+Dev precision: 0.931915
+Dev recall: 0.917277
+Dev f1_core: 0.924538
+241
+4383 4070 0.9285877253023044
+0.3941908713692946
+Test accuracy: 0.928588
+Test precision: 0.933858
+Test recall: 0.904883
+Test f1_core: 0.919142
+Epoch 20 use 11 seconds.
+Epoch 21...
+LR: 0.00075
+1924
+32551 30596 0.9399404012165525
+0.4984407484407484
+Train accuracy: 0.939940
+Train precision: 0.917049
+Train recall: 0.949277
+Train f1_core: 0.932885
+241
+4254 3971 0.9334743770568876
+0.43568464730290457
+Dev accuracy: 0.933474
+Dev precision: 0.928383
+Dev recall: 0.923037
+Dev f1_core: 0.925702
+241
+4383 4078 0.9304129591603925
+0.3983402489626556
+Test accuracy: 0.930413
+Test precision: 0.930981
+Test recall: 0.912513
+Test f1_core: 0.921654
+Epoch 21 use 11 seconds.
+Epoch 22...
+LR: 0.00075
+1924
+32551 30590 0.9397560750821787
+0.49272349272349275
+Train accuracy: 0.939756
+Train precision: 0.913498
+Train recall: 0.953259
+Train f1_core: 0.932955
+241
+4254 3984 0.9365303244005642
+0.44813278008298757
+Dev accuracy: 0.936530
+Dev precision: 0.927975
+Dev recall: 0.930890
+Dev f1_core: 0.929430
+241
+4383 4080 0.9308692676249144
+0.38589211618257263
+Test accuracy: 0.930869
+Test precision: 0.927506
+Test recall: 0.917599
+Test f1_core: 0.922526
+Epoch 22 use 11 seconds.
+Epoch 23...
+LR: 0.00075
+1924
+32551 30594 0.9398789591717612
+0.4979209979209979
+Train accuracy: 0.939879
+Train precision: 0.917432
+Train recall: 0.948648
+Train f1_core: 0.932779
+241
+4254 3971 0.9334743770568876
+0.43983402489626555
+Dev accuracy: 0.933474
+Dev precision: 0.929288
+Dev recall: 0.921990
+Dev f1_core: 0.925624
+241
+4383 4078 0.9304129591603925
+0.4024896265560166
+Test accuracy: 0.930413
+Test precision: 0.931877
+Test recall: 0.911495
+Test f1_core: 0.921574
+Epoch 23 use 12 seconds.
+Epoch 24...
+LR: 0.00075
+1924
+32551 30594 0.9398789591717612
+0.4974012474012474
+Train accuracy: 0.939879
+Train precision: 0.916251
+Train recall: 0.950115
+Train f1_core: 0.932876
+241
+4254 3976 0.9346497414198401
+0.43983402489626555
+Dev accuracy: 0.934650
+Dev precision: 0.929022
+Dev recall: 0.925131
+Dev f1_core: 0.927072
+241
+4383 4082 0.9313255760894364
+0.3941908713692946
+Test accuracy: 0.931326
+Test precision: 0.930233
+Test recall: 0.915565
+Test f1_core: 0.922840
+Epoch 24 use 11 seconds.
+Epoch 25...
+LR: 0.00075
+1924
+32551 30597 0.9399711222389481
+0.49480249480249483
+Train accuracy: 0.939971
+Train precision: 0.915708
+Train recall: 0.951024
+Train f1_core: 0.933032
+241
+4254 3981 0.9358251057827927
+0.44398340248962653
+Dev accuracy: 0.935825
+Dev precision: 0.929208
+Dev recall: 0.927749
+Dev f1_core: 0.928478
+241
+4383 4084 0.9317818845539585
+0.3983402489626556
+Test accuracy: 0.931782
+Test precision: 0.930305
+Test recall: 0.916582
+Test f1_core: 0.923392
+Epoch 25 use 11 seconds.
+Epoch 26...
+LR: 0.00075
+1924
+32551 30610 0.9403704955300912
+0.498960498960499
+Train accuracy: 0.940370
+Train precision: 0.917522
+Train recall: 0.949766
+Train f1_core: 0.933365
+241
+4254 3978 0.9351198871650211
+0.44398340248962653
+Dev accuracy: 0.935120
+Dev precision: 0.930000
+Dev recall: 0.925131
+Dev f1_core: 0.927559
+241
+4383 4080 0.9308692676249144
+0.3941908713692946
+Test accuracy: 0.930869
+Test precision: 0.930606
+Test recall: 0.914039
+Test f1_core: 0.922248
+Epoch 26 use 11 seconds.
+Epoch 27...
+LR: 0.00075
+1924
+32551 30611 0.9404012165524869
+0.4984407484407484
+Train accuracy: 0.940401
+Train precision: 0.917471
+Train recall: 0.949906
+Train f1_core: 0.933407
+241
+4254 3977 0.9348848142924306
+0.44398340248962653
+Dev accuracy: 0.934885
+Dev precision: 0.929511
+Dev recall: 0.925131
+Dev f1_core: 0.927316
+241
+4383 4081 0.9310974218571755
+0.3983402489626556
+Test accuracy: 0.931097
+Test precision: 0.930196
+Test recall: 0.915056
+Test f1_core: 0.922564
+Epoch 27 use 11 seconds.
+Epoch 28...
+LR: 0.00075
+1924
+32551 30616 0.940554821664465
+0.4984407484407484
+Train accuracy: 0.940555
+Train precision: 0.917105
+Train recall: 0.950744
+Train f1_core: 0.933621
+241
+4254 3976 0.9346497414198401
+0.44398340248962653
+Dev accuracy: 0.934650
+Dev precision: 0.928122
+Dev recall: 0.926178
+Dev f1_core: 0.927149
+241
+4383 4081 0.9310974218571755
+0.4024896265560166
+Test accuracy: 0.931097
+Test precision: 0.929309
+Test recall: 0.916073
+Test f1_core: 0.922643
+Epoch 28 use 11 seconds.
+Epoch 29...
+LR: 0.00075
+1924
+32551 30619 0.9406469847316519
+0.4984407484407484
+Train accuracy: 0.940647
+Train precision: 0.918418
+Train recall: 0.949347
+Train f1_core: 0.933626
+241
+4254 3976 0.9346497414198401
+0.43983402489626555
+Dev accuracy: 0.934650
+Dev precision: 0.929926
+Dev recall: 0.924084
+Dev f1_core: 0.926996
+241
+4383 4083 0.9315537303216974
+0.3983402489626556
+Test accuracy: 0.931554
+Test precision: 0.932054
+Test recall: 0.914039
+Test f1_core: 0.922958
+Epoch 29 use 12 seconds.
+??????????????????????????????????????
+Epoch: 22 best_dev_acc: 0.936530  best_test_acc: 0.930869

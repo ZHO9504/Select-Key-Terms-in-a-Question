@@ -1,0 +1,327 @@
+haiou@gpu3-1080:/home/hd_1T/haiou/testdata/termselect$ python3.5 -u src/main.py term --lr 0.006 --dropout_rnn_output 0.1 --batch_size 150 --hidden_size 250 --use_multiturn_infer False --dropout_att_score 0.2 --use_conv False --cat_num 3 --l2_strength 3e-6 --tri_input NA --p_channel True --q_channel True --c_channel True --use_cuda False
+Namespace(batch_size=150, beta=10.0, c_channel=True, c_rnn_input_type='pqc', cat_num=3, checkpoint_name='best', debug=False, doc_layers=1, dropout_att_score=0.2, dropout_emb=0.4, dropout_init_mem_emb=0.5, dropout_residual=0.1, dropout_rnn_output=0.1, embedding_file='/home/hd_1T/haiou/test0730_race_update/data/glove.840B.300d.txt', epoch=30, finetune_topk=10, gpu='0', grad_clipping=10.0, hidden_size=250, infer_layers=1, k_held_out=10, l2_strength=3e-06, lr=0.006, matched_p='pcq', matching_order='csm', max_length=50, model_name='term', ner_emb_dim=8, optimizer='adamax', p_channel=True, pos_emb_dim=12, pretrained='', q_channel=True, rel_emb_dim=10, rnn_output_dropout=True, rnn_padding=True, rnn_type='lstm', seed=1234, test_mode=False, train_name='model_00', tri_input='NA', use_bilstm=True, use_bimemory=False, use_conv=False, use_cuda=False, use_multiturn_infer=False)
+Load vocabulary from ./data/vocab...
+Vocabulary size: 5451
+Load pos vocabulary from ./data/pos_vocab...
+POS vocabulary size: 47
+Load ner vocabulary from ./data/ner_vocab...
+NER vocabulary size: 18
+Load relation vocabulary from ./data/rel_vocab...
+Rel vocabulary size: 32
+Load 1925 examples from ./data/train.json... use 0 seconds
+Load 482 examples from ./data/dev.json... use 0 seconds
+Load 482 examples from ./data/dev.json... use 0 seconds
+Use cuda: False
+###########self.args.matching_order:  csm 
+dMyModel(
+  (embedding): Embedding(5451, 300, padding_idx=0)
+  (pos_embedding): Embedding(47, 12, padding_idx=0)
+  (ner_embedding): Embedding(18, 8, padding_idx=0)
+  (rel_embedding): Embedding(32, 10, padding_idx=0)
+  (context_rnn): StackedBRNN(
+    (rnns): ModuleList(
+      (0): LSTM(345, 250, bidirectional=True)
+    )
+  )
+  (Hq_BiLstm): StackedBRNN(
+    (rnns): ModuleList(
+      (0): LSTM(690, 250, bidirectional=True)
+    )
+  )
+  (hidden_match): SeqDotAttnMatch()
+  (mtinfer): MultiTurnInference(
+    (cat_linear): Linear(in_features=1000, out_features=250, bias=True)
+    (sub_linear): Linear(in_features=500, out_features=250, bias=True)
+    (mul_linear): Linear(in_features=500, out_features=250, bias=True)
+    (inference_rnn): StackedBRNN(
+      (rnns): ModuleList(
+        (0): LSTM(750, 250, bidirectional=True)
+      )
+    )
+  )
+  (q_self_attn): LinearSeqAttn(
+    (linear): Linear(in_features=500, out_features=1, bias=True)
+  )
+  (linearlayer): Linear(in_features=345, out_features=345, bias=True)
+  (pre_y): Linear(in_features=545, out_features=1, bias=True)
+  (c_infer_linear): Linear(in_features=4000, out_features=250, bias=True)
+)
+Number of parameters:  6707445
+model <model.Model object at 0x7f496671bb38>
+Trained model will be saved to ./checkpoint/term-best.mdl
+Epoch 0...
+/home/hd_1T/haiou/testdata/termselect/src/layers.py:227: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  alpha_flat = F.softmax(scores.view(-1, y.size(1)))
+Hq tensor([[[-0.0877,  0.0303, -0.1376,  ..., -0.1304, -0.0181, -0.0299],
+         [-0.1335, -0.0446, -0.0751,  ...,  0.0369, -0.0137,  0.0000],
+         [-0.2280, -0.1458,  0.0000,  ..., -0.2444, -0.0043,  0.0000],
+         ...,
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000]],
+
+        [[ 0.0955,  0.1416, -0.1830,  ...,  0.0581, -0.0597, -0.0866],
+         [ 0.2090,  0.0472,  0.0466,  ..., -0.0211, -0.0000, -0.0264],
+         [-0.0718,  0.0031, -0.1260,  ..., -0.1654, -0.0223, -0.0487],
+         ...,
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000]],
+
+        [[-0.0733,  0.0544, -0.0117,  ...,  0.0457,  0.0049,  0.0518],
+         [-0.2599,  0.1062, -0.0779,  ...,  0.0875,  0.0519, -0.0012],
+         [-0.1636,  0.0000,  0.0205,  ...,  0.1051, -0.0803,  0.0025],
+         ...,
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000]],
+
+        ...,
+
+        [[-0.0796,  0.0915,  0.1216,  ..., -0.0412,  0.0019, -0.2119],
+         [-0.2761,  0.0048,  0.0438,  ..., -0.2087, -0.1033, -0.0000],
+         [-0.2214,  0.1545, -0.0000,  ..., -0.1108, -0.0216, -0.1774],
+         ...,
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000]],
+
+        [[-0.0505,  0.1521, -0.0499,  ..., -0.1895, -0.0904, -0.0000],
+         [-0.0172,  0.1723, -0.1154,  ..., -0.0999, -0.0000, -0.0449],
+         [-0.0729,  0.1762, -0.1647,  ..., -0.0000, -0.1171, -0.0134],
+         ...,
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000]],
+
+        [[-0.0163,  0.0168, -0.0713,  ...,  0.0371, -0.2186,  0.0000],
+         [-0.2035,  0.0325, -0.0000,  ..., -0.0943, -0.0000,  0.0328],
+         [-0.1955,  0.1369, -0.0308,  ..., -0.1345, -0.2678,  0.0000],
+         ...,
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000]]],
+       grad_fn=<MulBackward0>)
+pre tensor([[[ 0.0588],
+         [-0.0216],
+         [ 0.0185],
+         ...,
+         [ 0.0007],
+         [ 0.0102],
+         [-0.0062]],
+
+        [[-0.0399],
+         [-0.0725],
+         [-0.0231],
+         ...,
+         [ 0.0046],
+         [ 0.0022],
+         [ 0.0160]],
+
+        [[-0.0125],
+         [-0.0272],
+         [-0.0384],
+         ...,
+         [ 0.0003],
+         [-0.0010],
+         [ 0.0007]],
+
+        ...,
+
+        [[ 0.0066],
+         [ 0.0099],
+         [ 0.0303],
+         ...,
+         [ 0.0035],
+         [ 0.0189],
+         [ 0.0046]],
+
+        [[-0.0282],
+         [-0.0496],
+         [-0.0569],
+         ...,
+         [ 0.0089],
+         [ 0.0193],
+         [ 0.0017]],
+
+        [[-0.0293],
+         [-0.0082],
+         [ 0.0006],
+         ...,
+         [ 0.0148],
+         [ 0.0019],
+         [-0.0029]]], grad_fn=<AddBackward0>)
+/usr/local/lib/python3.5/dist-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+probq,q tensor([[0.5147, 0.4946, 0.5046,  ..., 0.5002, 0.5026, 0.4984],
+        [0.4900, 0.4819, 0.4942,  ..., 0.5011, 0.5005, 0.5040],
+        [0.4969, 0.4932, 0.4904,  ..., 0.5001, 0.4997, 0.5002],
+        ...,
+        [0.5017, 0.5025, 0.5076,  ..., 0.5009, 0.5047, 0.5011],
+        [0.4929, 0.4876, 0.4858,  ..., 0.5022, 0.5048, 0.5004],
+        [0.4927, 0.4979, 0.5002,  ..., 0.5037, 0.5005, 0.4993]],
+       grad_fn=<SigmoidBackward>) tensor([[3704, 3482,  225,  ...,    0,    0,    0],
+        [ 473, 1405, 2730,  ...,    0,    0,    0],
+        [1357, 4327,  807,  ...,    0,    0,    0],
+        ...,
+        [3791, 4450, 5101,  ...,    0,    0,    0],
+        [4157, 3871, 4450,  ...,    0,    0,    0],
+        [1357, 3606,  543,  ...,    0,    0,    0]])
+--------------------------------------------
+torch.Size([150, 59])
+torch.Size([150, 59])
+pred_proba tensor([[0.5147, 0.4946, 0.5046,  ..., 0.5002, 0.5026, 0.4984],
+        [0.4900, 0.4819, 0.4942,  ..., 0.5011, 0.5005, 0.5040],
+        [0.4969, 0.4932, 0.4904,  ..., 0.5001, 0.4997, 0.5002],
+        ...,
+        [0.5017, 0.5025, 0.5076,  ..., 0.5009, 0.5047, 0.5011],
+        [0.4929, 0.4876, 0.4858,  ..., 0.5022, 0.5048, 0.5004],
+        [0.4927, 0.4979, 0.5002,  ..., 0.5037, 0.5005, 0.4993]],
+       grad_fn=<SigmoidBackward>)
+/home/hd_1T/haiou/testdata/termselect/src/model.py:91: UserWarning: torch.nn.utils.clip_grad_norm is now deprecated in favor of torch.nn.utils.clip_grad_norm_.
+  torch.nn.utils.clip_grad_norm(self.network.parameters(), self.args.grad_clipping)
+Hq tensor([[[nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         ...,
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]],
+
+        [[nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         ...,
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]],
+
+        [[nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         ...,
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]],
+
+        ...,
+
+        [[nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         ...,
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]],
+
+        [[nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         ...,
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]],
+
+        [[nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         [nan, nan, nan,  ..., nan, nan, nan],
+         ...,
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.],
+         [0., 0., 0.,  ..., 0., 0., 0.]]], grad_fn=<MulBackward0>)
+pre tensor([[[nan],
+         [nan],
+         [nan],
+         ...,
+         [nan],
+         [nan],
+         [nan]],
+
+        [[nan],
+         [nan],
+         [nan],
+         ...,
+         [nan],
+         [nan],
+         [nan]],
+
+        [[nan],
+         [nan],
+         [nan],
+         ...,
+         [nan],
+         [nan],
+         [nan]],
+
+        ...,
+
+        [[nan],
+         [nan],
+         [nan],
+         ...,
+         [nan],
+         [nan],
+         [nan]],
+
+        [[nan],
+         [nan],
+         [nan],
+         ...,
+         [nan],
+         [nan],
+         [nan]],
+
+        [[nan],
+         [nan],
+         [nan],
+         ...,
+         [nan],
+         [nan],
+         [nan]]], grad_fn=<AddBackward0>)
+probq,q tensor([[4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        ...,
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ...,        nan,        nan,
+                nan]], grad_fn=<SigmoidBackward>) tensor([[1357, 4687, 1797,  ...,    0,    0,    0],
+        [1357, 4687, 1797,  ...,    0,    0,    0],
+        [1357, 5322, 3606,  ...,    0,    0,    0],
+        ...,
+        [2517, 5211, 1797,  ...,    0,    0,    0],
+        [2517,  769, 1354,  ...,    0,    0,    0],
+        [1357, 3606, 3123,  ...,    0,    0,    0]])
+--------------------------------------------
+torch.Size([150, 76])
+torch.Size([150, 76])
+pred_proba tensor([[4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        ...,
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ..., 4.1560e-39, 4.1560e-39,
+         4.1560e-39],
+        [4.1560e-39, 4.1560e-39, 4.1560e-39,  ...,        nan,        nan,
+                nan]], grad_fn=<SigmoidBackward>)
+Traceback (most recent call last):
+  File "src/main.py", line 129, in <module>
+    b_info,b_dev_acc, b_test_acc = run_epoch(args,model,train_data,dev_data,test_data,checkpoint_path)
+  File "src/main.py", line 68, in run_epoch
+    model.train(cur_train_data)
+  File "/home/hd_1T/haiou/testdata/termselect/src/model.py", line 81, in train
+    loss = F.binary_cross_entropy(pred_proba, y)
+  File "/usr/local/lib/python3.5/dist-packages/torch/nn/functional.py", line 2027, in binary_cross_entropy
+    input, target, weight, reduction_enum)
+RuntimeError: Assertion `x >= 0. && x <= 1.' failed. input value should be between 0~1, but got -nan at /pytorch/aten/src/THNN/generic/BCECriterion.c:62
+haiou@gpu3-1080:/home/hd_1T/haiou/testdata/termselect$ d
+

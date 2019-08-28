@@ -1,0 +1,22 @@
+/home/hd_1T/haiou/testdata/termselect/src/layers.py:227: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  alpha_flat = F.softmax(scores.view(-1, y.size(1)))
+/usr/local/lib/python3.5/dist-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+/home/hd_1T/haiou/testdata/termselect/src/model.py:95: UserWarning: torch.nn.utils.clip_grad_norm is now deprecated in favor of torch.nn.utils.clip_grad_norm_.
+  torch.nn.utils.clip_grad_norm(self.network.parameters(), self.args.grad_clipping)
+Traceback (most recent call last):
+  File "src/main.py", line 130, in <module>
+    b_info,b_dev_acc, b_test_acc = run_epoch(args,model,train_data,dev_data,test_data,checkpoint_path)
+  File "src/main.py", line 69, in run_epoch
+    train_acc,ta = model.evaluate(train_data[:2000], debug=False, eval_train=True)
+  File "/home/hd_1T/haiou/testdata/termselect/src/model.py", line 144, in evaluate
+    return sums/num,metrics.precision_score(gold, prediction)
+  File "/usr/local/lib/python3.5/dist-packages/sklearn/metrics/classification.py", line 1239, in precision_score
+    sample_weight=sample_weight)
+  File "/usr/local/lib/python3.5/dist-packages/sklearn/metrics/classification.py", line 1003, in precision_recall_fscore_support
+    y_type, y_true, y_pred = _check_targets(y_true, y_pred)
+  File "/usr/local/lib/python3.5/dist-packages/sklearn/metrics/classification.py", line 73, in _check_targets
+    type_true = type_of_target(y_true)
+  File "/usr/local/lib/python3.5/dist-packages/sklearn/utils/multiclass.py", line 250, in type_of_target
+    raise ValueError('You appear to be using a legacy multi-label data'
+ValueError: You appear to be using a legacy multi-label data representation. Sequence of sequences are no longer supported; use a binary array or sparse matrix instead.
